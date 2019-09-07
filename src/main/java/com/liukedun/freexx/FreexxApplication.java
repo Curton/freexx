@@ -1,0 +1,83 @@
+package com.liukedun.freexx;
+
+import com.github.dockerjava.api.DockerClient;
+import com.github.dockerjava.api.command.CreateContainerResponse;
+import com.github.dockerjava.api.model.*;
+import com.github.dockerjava.core.DockerClientBuilder;
+import com.liukedun.freexx.docker.DockerClientList;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+@SpringBootApplication
+@Log4j2
+public class FreexxApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(FreexxApplication.class, args);
+    }
+
+    @Bean
+    public static DockerClientList dockerClients() {
+        DockerClientList dockerClients = new DockerClientList();
+        // get docker client instance
+        DockerClient dockerClient = DockerClientBuilder.getInstance("tcp://hk.liukedun.com:2375").build();
+        dockerClients.add("hk.liukedun", dockerClient);
+        return dockerClients;
+    }
+
+    @Bean
+    public static CommandLineRunner commandLineRunner(DockerClientList dockerClients) {
+        // dockerClients.forEach(o -> System.out.println(o.infoCmd().exec().getArchitecture() ));
+        return args -> {
+            for (DockerClient dockerClient : dockerClients) {
+                try {
+                    Info exec = dockerClient.infoCmd().exec();
+
+                    log.error("test to start a container");
+
+                    RestartPolicy restartPolicy = RestartPolicy.alwaysRestart();
+                    HostConfig hostConfig = new HostConfig().withRestartPolicy(restartPolicy).withCpuShares(256);
+                    hostConfig.withPortBindings(new PortBinding(new Ports.Binding("", ""), new ExposedPort(8388)));
+                    CreateContainerResponse container = dockerClient
+                            .createContainerCmd("4ae4e89442e8")
+                            .withName("test_ss_cointainer")
+                            .withEnv("PASSWORD=cstprivatess", "METHOD=rc4-md5")
+                            .withHostConfig(hostConfig)
+                            .exec();
+
+                    log.error("test end");
+                } catch (Exception e) {
+                    log.warn(e.getMessage());
+                }
+
+            }
+        };
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
