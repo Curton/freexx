@@ -1,4 +1,4 @@
-package com.liukedun.freexx.docker;
+package com.liukedun.freexx.docker.model;
 
 import com.liukedun.freexx.exceptions.InvalidArgumentException;
 

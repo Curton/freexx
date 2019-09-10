@@ -1,4 +1,4 @@
-package com.liukedun.freexx.docker;
+package com.liukedun.freexx.docker.model;
 
 /**
  * @author CoveyLiu, covey@liukedun.com

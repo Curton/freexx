@@ -4,7 +4,7 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import com.github.dockerjava.api.model.*;
-import com.liukedun.freexx.docker.DockerClientList;
+import com.liukedun.freexx.docker.model.DockerClientList;
 import com.liukedun.freexx.exceptions.RequiredImageNotFoundException;
 import com.liukedun.freexx.exceptions.StartNewClientFailedException;
 import lombok.extern.log4j.Log4j2;

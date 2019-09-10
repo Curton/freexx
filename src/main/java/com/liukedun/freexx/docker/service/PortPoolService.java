@@ -1,6 +1,6 @@
 package com.liukedun.freexx.docker.service;
 
-import com.liukedun.freexx.docker.PortPool;
+import com.liukedun.freexx.docker.model.PortPool;
 
 /**
  * @author CoveyLiu, covey@liukedun.com

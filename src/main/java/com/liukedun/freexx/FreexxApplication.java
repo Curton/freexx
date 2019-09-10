@@ -2,7 +2,7 @@ package com.liukedun.freexx;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.DockerClientBuilder;
-import com.liukedun.freexx.docker.DockerClientList;
+import com.liukedun.freexx.docker.model.DockerClientList;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

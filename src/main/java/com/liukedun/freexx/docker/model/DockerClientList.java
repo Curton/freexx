@@ -1,4 +1,4 @@
-package com.liukedun.freexx.docker;
+package com.liukedun.freexx.docker.model;
 
 import com.github.dockerjava.api.DockerClient;
 import lombok.Data;
