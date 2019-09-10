@@ -1,7 +1,6 @@
 package com.liukedun.freexx;
 
 import com.github.dockerjava.api.DockerClient;
-import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.liukedun.freexx.docker.DockerClientList;
 import lombok.extern.log4j.Log4j2;
@@ -9,8 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.util.List;
 
 /**
  * @author Covey Liu
@@ -121,9 +118,6 @@ public class FreexxApplication {
             }*/
         };
     }
-
-
-
 }
 
 

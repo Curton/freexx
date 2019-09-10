@@ -53,11 +53,12 @@ public class CreateContainerService {
         return null;
     }
 
-    public boolean CreateDefautClient() {
+    public boolean createDefautClient() {
         return false;
     }
 
-    public String create(String dockerName, int tcpPort, int udpPort, String password, String method) {
+    public List<InspectContainerResponse> create(String dockerName, int tcpPort, int udpPort, String password, String method) {
+        List<InspectContainerResponse> inspectContainerResponses = new ArrayList<>();
         for (DockerClient dockerClient : dockerClients) {
             try {
 
@@ -103,8 +104,8 @@ public class CreateContainerService {
                         .withCpuShares(256)
                         .withMemory(DEFAULT_CONTAINER_MEMORY);
                 List<PortBinding> portBindingList = new ArrayList<>(2);
-                portBindingList.add(new PortBinding(new Ports.Binding("", ""), new ExposedPort(SS_CONTAINER_EXPOSE_PORT, InternetProtocol.TCP)));
-                portBindingList.add(new PortBinding(new Ports.Binding("", ""), new ExposedPort(SS_CONTAINER_EXPOSE_PORT, InternetProtocol.UDP)));
+                portBindingList.add(new PortBinding(new Ports.Binding("", tcpPort > 0 ? String.valueOf(tcpPort) : ""), new ExposedPort(SS_CONTAINER_EXPOSE_PORT, InternetProtocol.TCP)));
+                portBindingList.add(new PortBinding(new Ports.Binding("", udpPort > 0 ? String.valueOf(udpPort) : ""), new ExposedPort(SS_CONTAINER_EXPOSE_PORT, InternetProtocol.UDP)));
                 hostConfig.withPortBindings(portBindingList);
 
                 // Create container
@@ -120,7 +121,7 @@ public class CreateContainerService {
                 dockerClient.startContainerCmd(container.getId()).exec();
 
                 // get new docker client info
-                String newClientId = getContainerIdByName(dockerClient, dockerName);
+                String newClientId = container.getId();
                 log.info("newClientId : " + newClientId);
 
                 // check
@@ -132,12 +133,15 @@ public class CreateContainerService {
                 InspectContainerResponse inspectContainerResponse = dockerClient
                         .inspectContainerCmd(newClientId)
                         .exec();
-                return inspectContainerResponse.getId();
+
+                if (inspectContainerResponse != null) {
+                    inspectContainerResponses.add(inspectContainerResponse);
+                }
 
             } catch (Exception e) {
                 log.warn(e.getMessage());
             }
         }
-        return null;
+        return inspectContainerResponses;
     }
 }
