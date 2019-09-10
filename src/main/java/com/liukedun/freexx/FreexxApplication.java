@@ -1,20 +1,15 @@
 package com.liukedun.freexx;
 
 import com.github.dockerjava.api.DockerClient;
-import com.github.dockerjava.api.command.CreateContainerResponse;
-import com.github.dockerjava.api.command.InspectContainerResponse;
-import com.github.dockerjava.api.model.*;
+import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.liukedun.freexx.docker.DockerClientList;
-import com.liukedun.freexx.exceptions.RequiredImageNotFoundException;
-import com.liukedun.freexx.exceptions.StartNewClientFailedException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +39,7 @@ public class FreexxApplication {
     @Bean
     public static CommandLineRunner commandLineRunner(DockerClientList dockerClients) {
         return args -> {
-            for (DockerClient dockerClient : dockerClients) {
+            /*for (DockerClient dockerClient : dockerClients) {
                 try {
 
                     // get image id
@@ -83,17 +78,16 @@ public class FreexxApplication {
                         log.warn("stop and remove container : " + existClientId + " (" + dockerName + ")");
                     }
 
-                    // always restart
-                    RestartPolicy restartPolicy = RestartPolicy.alwaysRestart();
                     // HostConfig
                     HostConfig hostConfig = new HostConfig()
-                            .withRestartPolicy(restartPolicy)
+                            .withRestartPolicy(RestartPolicy.alwaysRestart())
                             .withCpuShares(256)
                             .withMemory((long) 1024 * 1024 * 128);
                     List<PortBinding> portBindingList = new ArrayList<>(2);
                     portBindingList.add(new PortBinding(new Ports.Binding("", ""), new ExposedPort(8388, InternetProtocol.TCP)));
                     portBindingList.add(new PortBinding(new Ports.Binding("", ""), new ExposedPort(8388, InternetProtocol.UDP)));
                     hostConfig.withPortBindings(portBindingList);
+
                     // Create container
                     CreateContainerResponse container = dockerClient
                             .createContainerCmd(targetImageId)
@@ -119,31 +113,16 @@ public class FreexxApplication {
                     InspectContainerResponse inspectContainerResponse = dockerClient
                             .inspectContainerCmd(newClientId)
                             .exec();
-                    // String newClientport = inspectContainerResponse.getHostConfig();
 
                 } catch (Exception e) {
                     log.warn(e.getMessage());
                 }
 
-            }
+            }*/
         };
     }
 
-    public static String getContainerIdByName(DockerClient dockerClient, String dockerName) {
-        List<Container> containers = dockerClient.listContainersCmd().withShowAll(true).exec();
-        boolean clientExist = false;
-        for (Container container : containers) {
-            for (String s : container.getNames()) {
-                if (s.substring(1).equals(dockerName)) {
-                    clientExist = true;
-                }
-            }
-            if (clientExist) {
-                return container.getId();
-            }
-        }
-        return null;
-    }
+
 
 }
 
