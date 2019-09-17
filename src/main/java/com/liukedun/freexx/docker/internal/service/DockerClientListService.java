@@ -1,4 +1,6 @@
-package com.liukedun.freexx.docker.service;
+package com.liukedun.freexx.docker.internal.service;
+
+import com.liukedun.freexx.docker.model.DockerClientList;
 
 /**
  * @author CoveyLiu, covey@liukedun.com

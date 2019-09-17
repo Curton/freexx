@@ -1,4 +1,4 @@
-package com.liukedun.freexx.docker.service;
+package com.liukedun.freexx.docker.internal.service;
 
 import org.springframework.beans.factory.annotation.Value;
 

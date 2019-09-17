@@ -22,7 +22,7 @@ public class FreexxApplication {
     }
 
     /**
-     * docker client
+     * create docker client manually
      */
     @Bean
     public static DockerClientList dockerClients() {

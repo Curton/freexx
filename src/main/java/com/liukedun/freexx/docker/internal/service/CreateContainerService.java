@@ -1,4 +1,4 @@
-package com.liukedun.freexx.docker.service;
+package com.liukedun.freexx.docker.internal.service;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
