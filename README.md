@@ -2,10 +2,10 @@
 
 A SS management panel base on docker.
 
-Build on Spring Boot
+Build on Spring Boot, Spring data jpa
 
 ## install
 
-Require java 8 or higher
+Require java 8 or higher.
 
-// todo
+// todo : in developing
