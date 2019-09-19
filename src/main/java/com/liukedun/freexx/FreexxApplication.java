@@ -3,11 +3,15 @@ package com.liukedun.freexx;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.liukedun.freexx.docker.model.DockerClientList;
+import com.liukedun.freexx.web.entity.User;
+import com.liukedun.freexx.web.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.Date;
 
 /**
  * @author Covey Liu
@@ -34,9 +38,18 @@ public class FreexxApplication {
     }
 
     @Bean
-    public static CommandLineRunner commandLineRunner(DockerClientList dockerClients) {
+    public static CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
             log.info("Start.");
+            User user = new User();
+            user.setEmail("liukedun@qq.com");
+            user.setName("liukedun");
+            user.setPassword("88327598");
+            user.setDate(new Date());
+            userRepository.save(user);
+
+            Iterable<User> userIterable = userRepository.findAll();
+            userIterable.forEach(System.out::println);
         };
     }
 }

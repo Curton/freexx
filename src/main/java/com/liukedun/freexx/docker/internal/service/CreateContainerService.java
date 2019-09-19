@@ -44,6 +44,7 @@ public class CreateContainerService {
             for (String s : container.getNames()) {
                 if (s.substring(1).equals(dockerName)) {
                     clientExist = true;
+                    break;
                 }
             }
             if (clientExist) {
@@ -138,7 +139,7 @@ public class CreateContainerService {
                     inspectContainerResponses.add(inspectContainerResponse);
                 }
 
-            } catch (Exception e) {
+            } catch (StartNewClientFailedException | RequiredImageNotFoundException e) {
                 log.warn(e.getMessage());
             }
         }
