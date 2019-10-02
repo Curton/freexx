@@ -3,7 +3,9 @@ package com.liukedun.freexx;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.liukedun.freexx.docker.model.DockerClientList;
+import com.liukedun.freexx.web.entity.AssignedPort;
 import com.liukedun.freexx.web.entity.User;
+import com.liukedun.freexx.web.repository.AssignedPortRepository;
 import com.liukedun.freexx.web.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
@@ -38,7 +40,7 @@ public class FreexxApplication {
     }
 
     @Bean
-    public static CommandLineRunner commandLineRunner(UserRepository userRepository) {
+    public static CommandLineRunner commandLineRunner(UserRepository userRepository, AssignedPortRepository assignedPortRepository) {
         return args -> {
             log.info("Start.");
             User user = new User();
@@ -47,6 +49,11 @@ public class FreexxApplication {
             user.setPassword("88327598");
             user.setDate(new Date());
             userRepository.save(user);
+
+            AssignedPort assignedPort = new AssignedPort();
+            assignedPort.setPort(123);
+            assignedPort.setUserId(user.getId());
+            assignedPortRepository.save(assignedPort);
 
             Iterable<User> userIterable = userRepository.findAll();
             userIterable.forEach(System.out::println);
