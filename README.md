@@ -1,3 +1,5 @@
+## Aborted because of regulations.
+
 ## freexx
 
 A SS management panel base on docker.
