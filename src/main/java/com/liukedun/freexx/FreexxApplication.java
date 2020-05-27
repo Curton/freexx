@@ -34,7 +34,7 @@ public class FreexxApplication {
     public static DockerClientList dockerClients() {
         DockerClientList dockerClients = new DockerClientList();
         // get docker client instance
-        DockerClient dockerClient = DockerClientBuilder.getInstance("tcp://hk.liukedun.com:2375").build();
+        DockerClient dockerClient = DockerClientBuilder.getInstance("localhost").build();
         dockerClients.add("hk.liukedun", dockerClient);
         return dockerClients;
     }
@@ -44,9 +44,9 @@ public class FreexxApplication {
         return args -> {
             log.info("Start.");
             User user = new User();
-            user.setEmail("liukedun@qq.com");
+            user.setEmail("covey@liukedun.com");
             user.setName("liukedun");
-            user.setPassword("88327598");
+            user.setPassword("123456");
             user.setDate(new Date());
             userRepository.save(user);
 
@@ -60,17 +60,3 @@ public class FreexxApplication {
         };
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
